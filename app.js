@@ -49,8 +49,7 @@ function initApp(cb) {
 module.exports = function(cb){
   //Schemas Initialization
   require('./schema')({
-    'Accounts'    : { readCapacity: 1, writeCapacity: 1 },
-    'BlogPosts'   : { readCapacity: 1, writeCapacity: 1 },
+    'Place'    : { readCapacity: 1, writeCapacity: 1 },
   }, function(err){
     if (err) {
       console.warn('Error creating tables', err);

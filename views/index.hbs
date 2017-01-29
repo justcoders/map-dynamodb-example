@@ -1,2 +1,95 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-6">
+            <div id="map-holder"></div>
+        </div>
+        <div class="col-lg-6">
+            <select name="distanceSelector" id="distanceSelector">
+                <option value="10" selected>10km</option>
+                <option value="20">20km</option>
+                <option value="30">30km</option>
+                <option value="50">50km</option>
+                <option value="100">100km</option>
+            </select>
+        </div>
+    </div>
+</div>
+<script src="/js/libs/lodash/dist/lodash.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var map;
+        var retangle;
+        var places = [];
+        var markers = {};
+
+        var $distanceSelector = $('#distanceSelector');
+        map = new google.maps.Map(document.getElementById('map-holder'), {
+            center: {lat: 49.444433, lng: 32.059767},
+            zoom: 8
+        });
+
+        $distanceSelector.on('change', function (e) {
+            console.log(e.target.value);
+            getBoundingBox(e.target.value);
+        });
+
+        getBoundingBox($distanceSelector.val());
+
+        function getBoundingBox(distance) {
+            var posting = $.post('/api/place/box', { lat: 49.444433, lng: 32.059767, distance: distance });
+            posting.done(function(data) {
+                console.log(data);
+                drawBox(data.bounds);
+                drawMarkers(data.places);
+            });
+        }
+
+        function drawBox(bounds) {
+            retangle && retangle.setMap(null);
+            retangle = new google.maps.Rectangle({
+                strokeColor: '#FF0000',
+                strokeOpacity: 0.5,
+                strokeWeight: 2,
+                fillColor: '#FF0000',
+                fillOpacity: 0.1,
+                map: map,
+                bounds: bounds
+            });
+        }
+
+        function drawMarkers(newPlaces) {
+            if(places.length){
+                var oldPlaces = _.differenceWith(places, newPlaces, _.isEqual);
+                console.log('Old Places: ',  oldPlaces);
+                if(oldPlaces.length){
+                    oldPlaces.forEach(function (oldPlace) {
+                        markers[oldPlace.id] && markers[oldPlace.id].setMap(null) && delete markers[oldPlace.id];
+                    });
+                    _.pullAllWith(newPlaces, _.pullAllWith(places, oldPlaces, _.isEqual), _.isEqual);
+                    console.log('NewPlace after pull : ', newPlaces);
+                    places = places.concat(newPlaces);
+                    addMarkers(newPlaces);
+                } else {
+                    _.pullAllWith(newPlaces, places, _.isEqual);
+                    console.log('NewPlace after pull : ', newPlaces);
+                    places = places.concat(newPlaces);
+                    addMarkers(newPlaces);
+                }
+            } else {
+                console.log('NewPlace: ', newPlaces);
+                places = newPlaces;
+                addMarkers(newPlaces);
+            }
+        }
+
+        function addMarkers(places) {
+            places.forEach(function (place) {
+                markers[place.id] = new google.maps.Marker({
+                    position: {lat: Number(place.lat), lng: Number(place.lng)},
+                    map: map
+                });
+            });
+        }
+    });
+
+</script>

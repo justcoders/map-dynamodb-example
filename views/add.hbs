@@ -1,0 +1,60 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-6">
+            <div id="map-holder"></div>
+        </div>
+        <div class="col-lg-6">
+            <div class="row">
+                <div class="col-lg-6 form-group">
+                    Lat: <input id="latInput" type="text" class="form-control" />
+                </div>
+                <div class="col-lg-6">
+                    Lon: <input id="lngInput" type="text" class="form-control" />
+                </div>
+                <div class="col-lg-12">
+                    <button id="sendBtn" class="btn btn-primary col-lg-12">Add place</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        var map;
+        var myLatlng = new google.maps.LatLng(49.444433, 32.059767);
+        $latInput = $('#latInput');
+        $lngInput = $('#lngInput');
+
+        map = new google.maps.Map(document.getElementById('map-holder'), {
+            center: myLatlng,
+            zoom: 8
+        });
+
+        var marker = new google.maps.Marker({
+            position: myLatlng,
+            map: map,
+            draggable:true
+        });
+
+        google.maps.event.addListener(
+            marker,
+            'drag',
+            function() {
+                $latInput.val(marker.position.lat());
+                $lngInput.val(marker.position.lng());
+            }
+        );
+
+        $('#sendBtn').on('click', function () {
+            if($latInput.val() !== '' && $lngInput.val() !== ''){
+                var posting = $.post('/api/place', { lat: $latInput.val(), lng: $lngInput.val() });
+                posting.done(function(data) {
+                    console.log(data);
+                    alert('Place added!!!');
+                });
+            } else {
+                alert('Input error! Check input values');
+            }
+        });
+    });
+</script>

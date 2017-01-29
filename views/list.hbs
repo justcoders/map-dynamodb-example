@@ -1,0 +1,49 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6">
+            <div class="list-group">
+            {{#each places}}
+                <div class="list-group-item row" data-id="{{id}}">
+                    <div class="col-lg-10">
+                        <div class="list-group-item-heading">ID: {{id}}<br> Lat: {{lat}} <br> Lng {{lng}}</div>
+                    </div>
+                    <div class="col-lg-2">
+                        <button type="button" class="btn btn-danger" data-id="{{id}}">
+                            <span class="glyphicon glyphicon-remove" style="color: white"></span>
+                        </button>
+                    </div>
+                </div>
+            {{/each}}
+            </div>
+        </div>
+        <div class="col-lg-3"></div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('.btn-danger').on('click', function () {
+            var deleteConfirm = confirm('Do you want delete place?');
+            if(deleteConfirm){
+                var id = $(this).data('id');
+                var $target = $(".list-group-item[data-id='"+ id +"']");
+
+                var deleting = $.ajax({
+                    url: '/api/place/' + id,
+                    type: 'DELETE'
+                });
+
+                deleting.done(function() {
+                    $target.hide('slow', function(){
+                        $target.remove();
+                        alert( "Item deleted!" );
+                    });
+                });
+
+                deleting.fail(function() {
+                    alert( "Error deleting place!" );
+                })
+            }
+        });
+    });
+</script>

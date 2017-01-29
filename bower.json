@@ -1,0 +1,21 @@
+{
+  "name": "map-dynamodb-example",
+  "description": "",
+  "main": "server.js",
+  "authors": [
+    "Ivan Zmerzlyi <dangelzm@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/justcoders/express-dynamodb-example",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "lodash": "^4.17.4"
+  }
+}

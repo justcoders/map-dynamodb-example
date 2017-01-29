@@ -3,7 +3,7 @@ services:
   api:
     build: .
     ports:
-      - "3018:3000"
+      - "3020:3000"
     links:
        - dynamodb
     environment:
@@ -17,4 +17,4 @@ services:
   dynamodb:
     image: peopleperhour/dynamodb:latest
     ports:
-      - "8018:8000"
+      - "8020:8000"
