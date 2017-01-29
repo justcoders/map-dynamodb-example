@@ -7,6 +7,7 @@ WORKDIR /usr/src/app
 
 COPY package.json /usr/src/app/
 RUN npm install -g pm2 && npm install
+RUN bower install
 
 COPY . /usr/src/app
 

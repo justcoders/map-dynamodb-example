@@ -3,11 +3,17 @@
 This example demonstrate bounding box with Google Map and DynamoDB
 Express framework used for backend part.
 
-### Quick start
+### Quick start with Docker
 
 Docker used for quick developer environment setup.
 Run `docker-compose up -d` to start services local.
 Open `http://localhost:3020/`
+
+### Quick start without Docker
+Run `npm install` and `bower install`
+For start DB_HOST, AWS_REGION, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY 
+environment properties must be provided.
+Run `PORT=3020 npm start` for start.
  
 ### URL
 
