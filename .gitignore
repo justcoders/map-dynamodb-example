@@ -33,3 +33,7 @@ npm-debug.log
 .env
 
 public/js/libs/*
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
