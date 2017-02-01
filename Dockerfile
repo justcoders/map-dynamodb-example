@@ -7,7 +7,7 @@ COPY package.json /usr/src/app/
 RUN npm install -g pm2
 RUN npm install -g bower
 RUN npm install
-RUN bower install
+RUN bower install --allow-root
 
 COPY . /usr/src/app
 
