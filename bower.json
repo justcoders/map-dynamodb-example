@@ -6,7 +6,7 @@
     "Ivan Zmerzlyi <dangelzm@gmail.com>"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/justcoders/express-dynamodb-example",
+  "homepage": "",
   "ignore": [
     "**/.*",
     "node_modules",
