@@ -1,5 +1,9 @@
 {
   "AWSEBDockerrunVersion": "1",
+  "Image": {
+    "Name": "312725682262.dkr.ecr.us-east-1.amazonaws.com/map-dynamodb/dev:latest",
+    "Update": "true"
+  },
   "Ports": [
     {
       "ContainerPort": "3000"
