@@ -7,14 +7,20 @@ services:
     links:
        - dynamodb
     environment:
+      - NODE_ENV=development
       - DB_HOST=http://dynamodb:8000
       - AWS_REGION=us-east-1
-      - AWS_ACCESS_KEY_ID=SDFSDFSDFSDFSDFSDFSDF
-      - AWS_SECRET_ACCESS_KEY=dffdg4gdfgd+dfgdfgfggrdgj77hg443
+      - AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
+      - AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
+      - /usr/src/app/public/js/libs
   dynamodb:
     image: peopleperhour/dynamodb:latest
     ports:
       - "8020:8000"
+    volumes:
+      - dynamodb_data:/var/dynamodb_wd
+volumes:
+  dynamodb_data:

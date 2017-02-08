@@ -3,4 +3,5 @@
 node_modules
 npm-debug.log
 .gitignore
+public/js/libs
 README.md
